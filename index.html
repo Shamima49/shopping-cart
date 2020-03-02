@@ -11,12 +11,12 @@
 </head>
 
 <body>
-
-   <section>
+    <h1 id="heading">Order accepted.</h1>
+   <section id = "vanishPage">
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div class="cart-item" id="phoneCart">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
@@ -25,17 +25,17 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default"><i id="remove-phone" class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="total-phone" value="1">
+                           <button class="btn btn-default"><i id="add-phone" class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$ <span id="phone-balance">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id="cross1">
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="caseCart">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -43,13 +43,13 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default"><i id="remove-case" class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="total-case" value="1">
+                           <button class="btn btn-default"><i id="add-case" class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$<span id="case-balance">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id="cross2">
                      </div>
                   </div>
                </div>
@@ -59,24 +59,116 @@
 
                      <div class="col-md-8">
                         <h5>Subtotal: </h5>
-                        <h5>Tax:</h5>
+                        <h5>Tax(15%):</h5>
                         <h5>Total:</h5>
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="subtotal">1,278</span> </h5>
+                        <h5>$ <span id="tax">0</span> </h5>
+                        <h5>$ <span id="total">1,278</span> </h5>
                      </div>
                   </div>
                </div>
                <div class="col-md-12 pt-4 pb-4">
-                  <button type="button" class="btn btn-success check-out">Check Out</button>
+                  <button id="checkout" type="button" class="btn btn-success check-out">Check Out</button>
                </div>
             </div>
          </div>
       </div>
    </section>
-</body>
 
+   <script>
+   //       const phone = document.getElementById("total-phone").value;
+   //       const pBalance = document.getElementById("phone-balance").innerText;
+   //         var pNum = parseFloat(phone);
+   //       var pBalanceA = parseFloat(pBalance);
+   //       const plusBtn = document.getElementById("add-phone");
+   //         plusBtn.addEventListener("click", function(){
+   //         if(pNum >= 1){
+   //            pNum = pNum + 1;
+   //         }
+   //        var pBal = pNumber * pBalance;
+   //       document.getElementById("total-phone").value = pNumber;
+   //       document.getElementById("phone-balance").innerText = pBal; 
+   //      })
+   //       var minusBtn = document.getElementById("remove-phone");
+   //        minusBtn.addEventListener("click",function(){      
+   //          if(pNum >= 1){
+   //          pNum = pNum - 1;
+   //          }
+   //        var pBal = pNumber * pBalance;
+   //        document.getElementById("total-phone").value = pNumber;
+   //        document.getElementById("phone-balance").innerText = pBal;
+   //        })
+
+          function value( pMinus, pPlus, pValue, pPrice){
+
+              //value 
+               var phoneValue = document.getElementById(pValue).value;
+               var phoneValueNum = parseFloat(phoneValue);
+               var phoneBalance = document.getElementById(pPrice).innerText;
+               var phoneBalanceNum = parseFloat(phoneBalance);
+
+            // plus button even handler
+            const plusBtn = document.getElementById(pPlus);
+            plusBtn.addEventListener("click",function(){
+                
+               if(phoneValueNum > 0){
+                  phoneValueNum = phoneValueNum + 1;
+                  subtotal = subtotal + phoneBalanceNum;
+                  amount(phoneValueNum,subtotal,pValue,pPrice);
+               }
+            });
+             // minus button even handler  
+               const minusBtn = document.getElementById(pMinus);
+                minusBtn.addEventListener("click",function(){
+
+                  if(phoneValueNum > 0){
+                  phoneValueNum = phoneValueNum - 1;
+                  subtotal = subtotal - phoneBalanceNum;
+                  amount(phoneValueNum,subtotal,pValue,pPrice);
+                }
+             });    
+            // amount function
+            var subtotalNum = document.getElementById("subtotal").innerText;
+            var subtotal = parseFloat(subtotalNum);
+
+            function amount(phoneValueNum,subtotal,pValue,pPrice){
+               var totalPrice = phoneValueNum * phoneBalanceNum; 
+               var tax = 5 * subtotal/100;
+               var total = subtotal + tax;
+
+            document.getElementById(pValue).value = phoneValueNum;
+            document.getElementById(pPrice).innerText = totalPrice;
+            document.getElementById("subtotal").innerText = subtotal;
+            document.getElementById("tax").innerText = tax;
+            document.getElementById("total").innerText = total;   
+            }
+          }
+          value ( "remove-phone" , "add-phone" , "total-phone" , "phone-balance" );
+          value ( "remove-case" , "add-case" , "total-case" , "case-balance" );
+       
+           const checkout = document.getElementById("checkout");
+             checkout.addEventListener("click",function(){
+                const hideArea = document.getElementById("vanishPage");
+                  hideArea.style.display = "none";
+             const replaceArea = document.getElementById("heading");
+                replaceArea.style.display = "block";
+              
+          });
+          const cross1 = document.getElementById("cross1");
+             cross1.addEventListener("click",function(){
+                const phoneCart = document.getElementById("phoneCart");
+                  phoneCart.style.display = "none";
+
+             });
+             const cross2 = document.getElementById("cross2");
+                cross2.addEventListener("click",function(){
+                const caseCart = document.getElementById("caseCart");
+                  caseCart.style.display = "none";
+
+               });    
+   </script>
+</body>
 </html>
